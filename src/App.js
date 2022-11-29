@@ -18,6 +18,15 @@ function App() {
     setToDo("");
   };
 
+  const deleteElement = (index) => {
+    console.log( "Delete");
+    setList( (curList) => {
+      return curList.filter( (curElt, curIndex) => {
+        return index !== curIndex;
+      });
+    });
+  };
+
   return (
    <>
     <div className="text-6xl font-extrabold drop-shadow-2xl bg-teal-500 text-blue-900 text-center">To-do List</div>
@@ -34,12 +43,12 @@ function App() {
         
             {
               list.map(
-                (curElt) => { 
+                (curElt, curIndex) => { 
                   return <>
                     <div className="">
                       <div className="flex flex-row justify-between">
-                        <p className="text-yellow-800"> {curElt} </p>
-                        <div className="fa fa-trash"></div>
+                        <p className="text-yellow-900"> {curElt} </p>
+                        <div className="fa fa-trash hover:text-red-700 text-yellow-900" onClick={() => deleteElement( curIndex )}></div>
                       </div>
                     </div>
                     <hr/>
