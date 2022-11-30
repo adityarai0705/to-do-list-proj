@@ -31,6 +31,20 @@ function App() {
         return index !== curIndex;
       });
     });
+
+  };
+
+  const completeElement = (index) => {
+    console.log( "Complete");
+    const newList = list.map((curElement, curIndex) => { 
+      if( curIndex === index){
+        curElement[ 2] = true;
+        return curElement;
+      }else{
+        return curElement;
+      }
+    });
+    setList( newList);
   };
 
   return (
@@ -45,29 +59,59 @@ function App() {
         <button className="m-2 p-2 bg-green-500 rounded-lg text-green-100 hover:bg-yellow-500 hover:text-yellow-100" onClick={addElement}>Add Task</button>
       </div>
 
+      
       <div className="bg-yellow-100 m-4 rounded-lg p-4">
-
-        
-            {
-              list.map(
-                (curElt, curIndex) => { 
-                  return <>
-                    <div className="">
-                      <div className="flex flex-row justify-between">
-                        <div>
-                          <p className="text-yellow-900"> {curElt[ 0]} </p>
-                          <p className="text-yellow-900"> {curElt[ 1]} </p>
-                        </div>
-                        <div className="fa fa-trash hover:text-red-700 text-yellow-900" onClick={() => deleteElement( curIndex )}></div>
-                      </div>
+        <h3 className="text-yellow-900 underline font-extrabold">Pending</h3>
+        {
+          list.map(
+            (curElt, curIndex) => { 
+              return (curElt[ 2] === false ? 
+              (<>
+                <div className="">
+                  <div className="flex flex-row justify-between">
+                    <div>
+                      <p className="text-yellow-900 font-bold"> {curElt[ 0]} </p>
+                      <p className="text-yellow-900"> {curElt[ 1]} </p>
                     </div>
-                    <hr/>
-                  </>;
-                })
-            }
-            
-        
+                    <div className="flex flex-row">
+                      <div className="hover:text-green-100 hover:bg-green-800 text-green-900 rounded p-2 m-2 cursor-pointer" onClick={() => completeElement( curIndex )}>Complete</div>
+                      <div className="hover:text-red-100 hover:bg-red-800 text-red-900 rounded p-2 m-2 cursor-pointer" onClick={() => deleteElement( curIndex )}>Delete</div>
+                    </div>
+                    
+                  </div>
+                </div>
+                <hr/>
+              </>) : (<></>) );
+            })
+        }
       </div>
+
+     
+      <div className="bg-yellow-100 m-4 rounded-lg p-4">
+        <h3 className="text-yellow-900 underline font-extrabold">Completed</h3>
+        {
+          list.map(
+            (curElt, curIndex) => { 
+              return (curElt[ 2] === true ? 
+              (<>
+                <div className="">
+                  <div className="flex flex-row justify-between">
+                    <div>
+                      <p className="text-yellow-900 font-bold line-through"> {curElt[ 0]} </p>
+                      <p className="text-yellow-900"> {curElt[ 1]} </p>
+                    </div>
+                    <div className="flex flex-row">
+                      <div className="hover:text-red-100 hover:bg-red-800 text-red-900 rounded p-2 m-2 cursor-pointer" onClick={() => deleteElement( curIndex )}>Delete</div>
+                    </div>
+                    
+                  </div>
+                </div>
+                <hr/>
+              </>) : (<></>) );
+            })
+        }
+        </div>
+
     </div>
    </>
   );
