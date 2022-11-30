@@ -72,12 +72,12 @@ function App() {
         <input type={'date'} className='m-2 p-2 rounded-lg border-2' placeholder='Enter new task' onChange={updateDate}></input>
         {/* onChange calls a jsx function whenever the text inside the input field is changed */}
 
-        <button className="m-2 p-2 bg-green-500 rounded-lg text-green-100 hover:bg-yellow-500 hover:text-yellow-100 cursor-pointer" onClick={addElement}>Add Task</button>
+        <button className="m-2 p-2 bg-green-500 rounded-lg text-green-100 hover:bg-green-900 hover:text-yellow-400 cursor-pointer" onClick={addElement}>Add Task</button>
       </div>
 
       
       <div className="bg-yellow-100 m-4 rounded-lg p-4 cursor-default">
-        <h3 className="text-yellow-900 underline font-extrabold">Pending</h3>
+        <h3 className="text-yellow-900 underline font-extrabold">Pending Tasks</h3>
         {
           numPending() == 0 ?
           <p className="text-yellow-800">No task to be done yet.</p>
@@ -107,7 +107,7 @@ function App() {
 
      
       <div className="bg-yellow-100 m-4 rounded-lg p-4 cursor-default">
-        <h3 className="text-yellow-900 underline font-extrabold">Completed</h3>
+        <h3 className="text-yellow-900 underline font-extrabold">Completed Tasks</h3>
         {
           numCompleted() == 0 ?
           <p className="text-yellow-800">No task has been completed yet.</p>
