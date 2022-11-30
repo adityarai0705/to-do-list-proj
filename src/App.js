@@ -47,6 +47,22 @@ function App() {
     setList( newList);
   };
 
+  const numPending = () => {
+    let counter = 0;
+    list.map( (curElt) => {
+      if( curElt[ 2] == false) counter++;
+    })
+    return counter;
+  }
+
+  const numCompleted = () => {
+    let counter = 0;
+    list.map( (curElt) => {
+      if( curElt[ 2] == true) counter++;
+    })
+    return counter;
+  }
+
   return (
    <>
     <div className="text-6xl font-extrabold drop-shadow-2xl bg-teal-500 text-blue-900 text-center">To-do List</div>
@@ -63,6 +79,9 @@ function App() {
       <div className="bg-yellow-100 m-4 rounded-lg p-4">
         <h3 className="text-yellow-900 underline font-extrabold">Pending</h3>
         {
+          numPending() == 0 ?
+          <p className="text-yellow-800">No task to be done yet.</p>
+          :
           list.map(
             (curElt, curIndex) => { 
               return (curElt[ 2] === false ? 
@@ -90,6 +109,9 @@ function App() {
       <div className="bg-yellow-100 m-4 rounded-lg p-4">
         <h3 className="text-yellow-900 underline font-extrabold">Completed</h3>
         {
+          numCompleted() == 0 ?
+          <p className="text-yellow-800">No task has been completed yet.</p>
+          :
           list.map(
             (curElt, curIndex) => { 
               return (curElt[ 2] === true ? 
