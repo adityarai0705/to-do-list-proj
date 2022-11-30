@@ -65,18 +65,18 @@ function App() {
 
   return (
    <>
-    <div className="text-6xl font-extrabold drop-shadow-2xl bg-teal-500 text-blue-900 text-center">To-do List</div>
-    <div className='h-screen w-screen bg-teal-100 flex flex-col'>
+    <div className="text-6xl font-extrabold drop-shadow-2xl bg-teal-500 text-blue-900 text-center cursor-default select-none">To-do List</div>
+    <div className='h-screen w-screen bg-teal-100 flex flex-col select-none'>
       <div className="flex flex-row justify-center m-4">
         <input className='m-2 p-2 rounded-lg border-2' placeholder='Enter new task' onChange={updateInput} value={primaryToDo}></input>
         <input type={'date'} className='m-2 p-2 rounded-lg border-2' placeholder='Enter new task' onChange={updateDate}></input>
         {/* onChange calls a jsx function whenever the text inside the input field is changed */}
 
-        <button className="m-2 p-2 bg-green-500 rounded-lg text-green-100 hover:bg-yellow-500 hover:text-yellow-100" onClick={addElement}>Add Task</button>
+        <button className="m-2 p-2 bg-green-500 rounded-lg text-green-100 hover:bg-yellow-500 hover:text-yellow-100 cursor-pointer" onClick={addElement}>Add Task</button>
       </div>
 
       
-      <div className="bg-yellow-100 m-4 rounded-lg p-4">
+      <div className="bg-yellow-100 m-4 rounded-lg p-4 cursor-default">
         <h3 className="text-yellow-900 underline font-extrabold">Pending</h3>
         {
           numPending() == 0 ?
@@ -106,7 +106,7 @@ function App() {
       </div>
 
      
-      <div className="bg-yellow-100 m-4 rounded-lg p-4">
+      <div className="bg-yellow-100 m-4 rounded-lg p-4 cursor-default">
         <h3 className="text-yellow-900 underline font-extrabold">Completed</h3>
         {
           numCompleted() == 0 ?
