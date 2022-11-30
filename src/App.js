@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 function App() {
   const [ primaryToDo, setToDo] = useState( "");
+  const [ primaryDate, setDate] = useState();
   const [ list, setList] = useState([]);
   // [] makes the list an array
 
@@ -10,10 +11,15 @@ function App() {
     // event.target.value => value of event ( passed into function as it is called within an input field)
   };
 
+  const updateDate = (event) => {
+    setDate( event.target.value);
+    // event.target.value => value of event ( passed into function as it is called within an input field)
+  };
+
   const addElement = () => {
     console.log( "kaam kiya");
     setList( (curList) => {
-      return [...curList, primaryToDo];
+      return [...curList, [primaryToDo, primaryDate, false]];
     });
     setToDo("");
   };
@@ -33,6 +39,7 @@ function App() {
     <div className='h-screen w-screen bg-teal-100 flex flex-col'>
       <div className="flex flex-row justify-center m-4">
         <input className='m-2 p-2 rounded-lg border-2' placeholder='Enter new task' onChange={updateInput} value={primaryToDo}></input>
+        <input type={'date'} className='m-2 p-2 rounded-lg border-2' placeholder='Enter new task' onChange={updateDate}></input>
         {/* onChange calls a jsx function whenever the text inside the input field is changed */}
 
         <button className="m-2 p-2 bg-green-500 rounded-lg text-green-100 hover:bg-yellow-500 hover:text-yellow-100" onClick={addElement}>Add Task</button>
@@ -47,7 +54,10 @@ function App() {
                   return <>
                     <div className="">
                       <div className="flex flex-row justify-between">
-                        <p className="text-yellow-900"> {curElt} </p>
+                        <div>
+                          <p className="text-yellow-900"> {curElt[ 0]} </p>
+                          <p className="text-yellow-900"> {curElt[ 1]} </p>
+                        </div>
                         <div className="fa fa-trash hover:text-red-700 text-yellow-900" onClick={() => deleteElement( curIndex )}></div>
                       </div>
                     </div>
