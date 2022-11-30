@@ -8,6 +8,10 @@ function App() {
   const [ quote, setQuote] = useState( "Loading...");
   // [] makes the list an array
 
+  // function timeout(delay: number) {
+  //   return new Promise( res => setTimeout(res, delay) );
+  // }
+
   const updateInput = (event) => {
     setToDo( event.target.value);
     // event.target.value => value of event ( passed into function as it is called within an input field)
@@ -39,7 +43,10 @@ function App() {
       return [...curList, [primaryToDo, primaryDate, false]];
     });
     setToDo("");
-    console.log( list);
+    // const timerId = setTimeout(() => {
+    //   console.log( list);
+    // }, 2000);
+    
   };
 
 
@@ -102,7 +109,7 @@ function App() {
    <>
     <div className="text-6xl font-extrabold drop-shadow-2xl bg-teal-100 text-blue-900 text-center cursor-default select-none">To-do List</div>
     <div className="text-2xl p-10 md:px-20 lg:px-40 bg-teal-300"><p>{quote}</p></div>
-    <div className='h-screen w-screen bg-teal-200 flex flex-col select-none'>
+    <div className='min-h-screen w-screen bg-teal-200 flex flex-col select-none'>
       <div className="flex flex-col justify-center m-4 md:flex-row">
         <input className='m-2 p-2 rounded-lg border-2' placeholder='Enter new task' onChange={updateInput} value={primaryToDo}></input>
         <input type={'date'} className='m-2 p-2 rounded-lg border-2' placeholder='Enter new task' onChange={updateDate}></input>
@@ -124,7 +131,7 @@ function App() {
                 <div className="">
                   <div className="flex flex-row justify-between">
                     <div>
-                      <p className="text-yellow-900 font-bold"> {curElt[ 0]} </p>
+                      <p className="text-yellow-900 font-bold max-w-[50%]"> {curElt[ 0]} </p>
                       <p className="text-yellow-900"> {curElt[ 1]} </p>
                     </div>
                     <div className="flex flex-col md:flex-row">
@@ -154,7 +161,7 @@ function App() {
                 <div className="">
                   <div className="flex flex-row justify-between">
                     <div>
-                      <p className="text-yellow-900 font-bold line-through"> {curElt[ 0]} </p>
+                      <p className="text-yellow-900 font-bold line-through max-w-[50%]"> {curElt[ 0]} </p>
                       <p className="text-yellow-900"> {curElt[ 1]} </p>
                     </div>
                     <div className="flex flex-row">
@@ -175,3 +182,6 @@ function App() {
 }
 
 export default App;
+
+
+
