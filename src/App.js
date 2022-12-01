@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Image from "./Image";
 import axios from 'axios';
+import { useMemo } from "react";
+
 
 function App() {
   const [ primaryToDo, setToDo] = useState( undefined);
   const [ primaryDate, setDate] = useState();
-  const [ primaryImage, setImage] = useState({ preview: "", raw: "" });
+  const [ primaryImage, setImage] = useState();
   const [ list, setList] = useState([]);
+  const [ temp, setTemp] = useState([]);
   const [ quote, setQuote] = useState( "Loading...");
 
   const updateInput = (event) => {
@@ -14,11 +17,37 @@ function App() {
   };
 
 
+
+  function GetDate(){
+    const separator = '-';
+    let newDate = new Date();
+    let date = newDate.getDate();
+    let month = newDate.getMonth() + 1;
+    let year = newDate.getFullYear();
+    
+    return `${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date<10?`0${date}`:`${date}`}`;
+  }
+
+  const SortDue = () => {
+    let SortListDue = list.sort((a, b) => new Date(...a[1].split('/').reverse()) - new Date(...b[1].split('/').reverse()));
+    console.log( SortListDue);
+    setList( SortListDue);
+    console.log( "due");
+  }
+
+  const SortAdd = () => {
+    let SortListAdd = list.sort((a, b) => new Date(...a[1].split('/').reverse()) - new Date(...b[1].split('/').reverse()));
+    console.log( SortListAdd)
+    setList( SortListAdd);
+    console.log( "add");
+  }
+
+
+
   function updateImage(e) {
     console.log(e.target.files);
     setImage(URL.createObjectURL(e.target.files[0]));
   }
-
 
   const updateDate = (event) => {
     setDate( event.target.value);
@@ -28,8 +57,10 @@ function App() {
   const addElement = () => {
     console.log( "kaam kiya");
     setList( (curList) => {
-      return [...curList, [primaryToDo, primaryDate, false, primaryImage]];
+      return [...curList, [primaryToDo, primaryDate, false, primaryImage, GetDate()]];
     });
+    console.log( primaryDate);
+    console.log( GetDate());
     setToDo(undefined);
     setImage(undefined);
     setDate(undefined);
@@ -104,6 +135,10 @@ function App() {
         {/* onChange calls a jsx function whenever the text inside the input field is changed */}
 
         <button className="m-2 p-2 bg-green-500 rounded-lg text-green-100 hover:bg-green-900 hover:text-yellow-400 cursor-pointer w-40" onClick={addElement}>Add Task</button>
+      </div>
+      <div>
+       <button onClick={SortDue}>Sort according to due date</button>
+       <button onClick={SortAdd}>Sort according to date created</button>
       </div>
 
       <div className="bg-teal-100 m-4 rounded-lg p-4 cursor-default md:mx-20 lg:mx-40 border border-yellow-900">
