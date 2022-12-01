@@ -136,9 +136,9 @@ function App() {
 
         <button className="m-2 p-2 bg-green-500 rounded-lg text-green-100 hover:bg-green-900 hover:text-yellow-400 cursor-pointer w-40" onClick={addElement}>Add Task</button>
       </div>
-      <div>
-       <button onClick={SortDue}>Sort according to due date</button>
-       <button onClick={SortAdd}>Sort according to date created</button>
+      <div className="flex flex-col lg:flex-row items-center justify-center">
+       <button onClick={SortDue} className='bg-teal-700 hover:bg-teal-900 text-teal-100 w-80 h-30 m-2 md:mx-20 md:mx-40 rounded-md p-2' style={{'width':'7cm'}}>Sort according to due date</button>
+       <button onClick={SortAdd} className='bg-teal-700 hover:bg-teal-900 text-teal-100 w-80 h-30 m-2 md:mx-20 md:mx-40 rounded-md p-2' style={{'width':'7cm'}}>Sort according to date created</button>
       </div>
 
       <div className="bg-teal-100 m-4 rounded-lg p-4 cursor-default md:mx-20 lg:mx-40 border border-yellow-900">
