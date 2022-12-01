@@ -1,52 +1,38 @@
 import React, { useEffect, useState } from "react";
+import Image from "./Image";
 import axios from 'axios';
 
 function App() {
-  const [ primaryToDo, setToDo] = useState( "");
+  const [ primaryToDo, setToDo] = useState( undefined);
   const [ primaryDate, setDate] = useState();
+  const [ primaryImage, setImage] = useState({ preview: "", raw: "" });
   const [ list, setList] = useState([]);
   const [ quote, setQuote] = useState( "Loading...");
-  // [] makes the list an array
-
-  // function timeout(delay: number) {
-  //   return new Promise( res => setTimeout(res, delay) );
-  // }
 
   const updateInput = (event) => {
     setToDo( event.target.value);
-    // event.target.value => value of event ( passed into function as it is called within an input field)
   };
+
+
+  function updateImage(e) {
+    console.log(e.target.files);
+    setImage(URL.createObjectURL(e.target.files[0]));
+  }
+
 
   const updateDate = (event) => {
     setDate( event.target.value);
     // event.target.value => value of event ( passed into function as it is called within an input field)
   };
 
-  // const SortList = () => {
-  //   // const sorted = [...list].sort((a, b) => {
-  //   //   return (new Date(b[1].split('/')) - new Date(a[1].split('/')));
-  //   // });
-  //   // console.log( sorted);
-  //   // setList(sorted);
-  //   setList( (curList) => {
-  //     return (
-  //       [...curList].sort( a, b) => {
-  //         return ( new Date( b[ 1].split( '/')) - new Date( a[ 1].split( '/')));
-  //       }
-  //     );
-  //   });
-  // }
-
   const addElement = () => {
     console.log( "kaam kiya");
     setList( (curList) => {
-      return [...curList, [primaryToDo, primaryDate, false]];
+      return [...curList, [primaryToDo, primaryDate, false, primaryImage]];
     });
-    setToDo("");
-    // const timerId = setTimeout(() => {
-    //   console.log( list);
-    // }, 2000);
-    
+    setToDo(undefined);
+    setImage(undefined);
+    setDate(undefined);
   };
 
 
@@ -90,9 +76,7 @@ function App() {
 
   async function fetchData() {
     try {
-      const response = await axios.get("https://favqs.com/api/qotd")
-      // setQuote(response.data)
-      // console.log( response.data);
+      const response = await axios.get("https://favqs.com/api/qotd");
       const obj = response.data;
       setQuote( obj[ 'quote'][ 'body']);
       console.log( quote);
@@ -110,9 +94,13 @@ function App() {
     <div className="text-6xl font-extrabold drop-shadow-2xl bg-teal-100 text-blue-900 text-center cursor-default select-none">To-do List</div>
     <div className="text-2xl p-10 md:px-20 lg:px-40 bg-teal-300"><p>{quote}</p></div>
     <div className='min-h-screen w-screen bg-teal-200 flex flex-col select-none'>
-      <div className="flex flex-col justify-center m-4 md:flex-row">
+      <div className="flex flex-col justify-center m-4 lg:flex-row">
         <input className='m-2 p-2 rounded-lg border-2' placeholder='Enter new task' onChange={updateInput} value={primaryToDo}></input>
-        <input type={'date'} className='m-2 p-2 rounded-lg border-2' placeholder='Enter new task' onChange={updateDate}></input>
+        <input type={'date'} className='m-2 p-2 rounded-lg border-2' onChange={updateDate}></input>
+        <div className='m-2 p-2 border border-yellow-900 text-yellow-900 rounded-lg'>
+        <p className="font-bold">Upload Image</p>
+        <input type={"file"} accept={"image/png, image/jpeg"} className='rounded-lg' onChange={updateImage}></input> 
+        </div>
         {/* onChange calls a jsx function whenever the text inside the input field is changed */}
 
         <button className="m-2 p-2 bg-green-500 rounded-lg text-green-100 hover:bg-green-900 hover:text-yellow-400 cursor-pointer w-40" onClick={addElement}>Add Task</button>
@@ -128,15 +116,16 @@ function App() {
             (curElt, curIndex) => { 
               return (curElt[ 2] === false ? 
               (<>
-                <div className="">
+                <div className="bg-teal-200 p-2 rounded-lg">
                   <div className="flex flex-row justify-between">
                     <div>
-                      <p className="text-yellow-900 font-bold max-w-[50%]"> {curElt[ 0]} </p>
-                      <p className="text-yellow-900"> {curElt[ 1]} </p>
+                      <p className="text-yellow-900 font-bold max-w-[50%]"> { curElt[ 0] == undefined ? 'No Title' : curElt[ 0]} </p>
+                      <p className="text-yellow-900"> {curElt[ 1] == undefined ? 'No Date' : curElt[ 1]} </p>
+                      <Image image = {curElt[ 3]} />
                     </div>
                     <div className="flex flex-col md:flex-row">
-                      <div className="hover:text-green-100 hover:bg-green-800 text-green-900 rounded p-2 m-2 cursor-pointer" onClick={() => completeElement( curIndex )}>Complete</div>
-                      <div className="hover:text-red-100 hover:bg-red-800 text-red-900 rounded p-2 m-2 cursor-pointer" onClick={() => deleteElement( curIndex )}>Delete</div>
+                      <div className="hover:text-green-100 hover:bg-green-800 text-green-900 rounded p-2 m-2 cursor-pointer h-10" onClick={() => completeElement( curIndex )}>Complete</div>
+                      <div className="hover:text-red-100 hover:bg-red-800 text-red-900 rounded p-2 m-2 cursor-pointer h-10" onClick={() => deleteElement( curIndex )}>Delete</div>
                     </div>
                     
                   </div>
@@ -158,14 +147,15 @@ function App() {
             (curElt, curIndex) => { 
               return (curElt[ 2] === true ? 
               (<>
-                <div className="">
+                <div className="bg-teal-200 p-2 rounded-lg">
                   <div className="flex flex-row justify-between">
                     <div>
-                      <p className="text-yellow-900 font-bold line-through max-w-[50%]"> {curElt[ 0]} </p>
-                      <p className="text-yellow-900"> {curElt[ 1]} </p>
+                      <p className="text-yellow-900 font-bold line-through max-w-[50%]">  { curElt[ 0] == undefined ? 'No Title' : curElt[ 0]} </p>
+                      <p className="text-yellow-900"> {curElt[ 1] == undefined ? 'No Date' : curElt[ 1]} </p>
+                      <Image image = {curElt[ 3]} />
                     </div>
                     <div className="flex flex-row">
-                      <div className="hover:text-red-100 hover:bg-red-800 text-red-900 rounded p-2 m-2 cursor-pointer" onClick={() => deleteElement( curIndex )}>Delete</div>
+                      <div className="hover:text-red-100 hover:bg-red-800 text-red-900 rounded p-2 m-2 cursor-pointer h-10" onClick={() => deleteElement( curIndex )}>Delete</div>
                     </div>
                     
                   </div>
