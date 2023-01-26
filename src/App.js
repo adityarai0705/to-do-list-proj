@@ -29,17 +29,17 @@ function App() {
   }
 
   const SortDue = () => {
-    let SortListDue = list.sort((a, b) => new Date(...a[1].split('/').reverse()) - new Date(...b[1].split('/').reverse()));
-    console.log( SortListDue);
+    let newlist = list;
+    let SortListDue = newlist.sort((a, b) => new Date(...a[1].split('/').reverse()) - new Date(...b[1].split('/').reverse()));
     setList( SortListDue);
-    console.log( "due");
+    setDate( null);
   }
 
   const SortAdd = () => {
-    let SortListAdd = list.sort((a, b) => new Date(...a[1].split('/').reverse()) - new Date(...b[1].split('/').reverse()));
-    console.log( SortListAdd)
+    let newlist = list;
+    let SortListAdd = newlist.sort((a, b) => new Date(...a[1].split('/').reverse()) - new Date(...b[1].split('/').reverse()));
     setList( SortListAdd);
-    console.log( "add");
+    setDate( null);
   }
 
 
